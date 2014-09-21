@@ -4,16 +4,13 @@
 require 'mail'
 require 'set'
 require 'twitter'
+require 'yaml'
 
-OK_ADDRS       = [
-                    'tweetuser@example.com'
-                 ]
+$yml = YAML.load_file(File.dirname(__FILE__) + '/grptwi.yml')
 
-NOTICE_ADDRS   = [
-                    'adminuser@examle.com'
-                 ]
-
-FROM_ADDRESS   = 'fromaddress@example.net'
+OK_ADDRS     = $yml['ok_addrs']
+NOTICE_ADDRS = $yml['notice_addrs']
+FROM_ADDR    = $yml['from_addr']
 
 FROM_REPLACE_STR   = '{from_address}'
 TWEET_REPLACE_STR  = '{tweet}'
@@ -31,16 +28,13 @@ Twitterへ次の文章を投稿しました。
 
 *** delete target {#{DEL_ID_REPLACE_STR}}. ***
 EOS
-
-DELETED_TEXT    = <<EOS
+DEL_ID_REGEXP  = /delete target {(.+?)}./
+DELETED_TEXT   = <<EOS
 次のつぶやきを削除しました。
 
 #{TWEET_REPLACE_STR}
 
 EOS
-
-DEL_ID_REGEXP      = /delete target {(.+?)}./
-
 
 def get_body(m) 
     if m.multipart? then
@@ -59,7 +53,7 @@ end
 
 def send_email(addr, body)
     to_mail = Mail.new
-    to_mail.from    = FROM_ADDRESS
+    to_mail.from    = FROM_ADDR
     to_mail.to      = addr
     to_mail.subject = RETURN_SUBJECT
     to_mail.body    = body
@@ -69,10 +63,10 @@ end
 
 def get_twitter_client
     client = Twitter::REST::Client.new do |config|
-        config.consumer_key        = 'YOUR API KEY'
-        config.consumer_secret     = 'YOUR API SECRET'
-        config.access_token        = 'YOUR ACCESS TOKEN'
-        config.access_token_secret = 'YOUR ACCESS TOKEN SECRET'
+        config.consumer_key        = $yml['consumer_key']
+        config.consumer_secret     = $yml['consumer_secret']
+        config.access_token        = $yml['access_token']
+        config.access_token_secret = $yml['access_token_secret']
     end
     return client
 end
