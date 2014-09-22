@@ -63,8 +63,8 @@ end
 
 def get_twitter_client
     client = Twitter::REST::Client.new do |config|
-        config.consumer_key        = $yml['consumer_key']
-        config.consumer_secret     = $yml['consumer_secret']
+        config.consumer_key        = $yml['api_key']
+        config.consumer_secret     = $yml['api_secret']
         config.access_token        = $yml['access_token']
         config.access_token_secret = $yml['access_token_secret']
     end

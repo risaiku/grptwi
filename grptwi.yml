@@ -8,10 +8,10 @@ notice_addrs:
 from_addr:
  from@example.jp
 
-consumer_key:
- YOUR_CONSUMER_KEY
-consumer_secret:
- YOUR_CONSUMER_SECRET
+api_key:
+ YOUR_API_KEY
+api_secret:
+ YOUR_API_SECRET
 access_token:
  YOUR_ACCESS_TOKEN
 access_token_secret:
