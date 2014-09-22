@@ -3,7 +3,7 @@
 
 #
 # grptwi.rb
-# version 1.0
+# v1.0.0
 #
 # Copyright (c) 2014 risaiku
 # This software is released under the MIT License.
