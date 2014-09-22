@@ -1,6 +1,17 @@
 #!/usr/local/bin/ruby
 # coding: utf-8
 
+#
+# grptwi.rb
+# version 1.0
+#
+# Copyright (c) 2014 risaiku
+# This software is released under the MIT License.
+#
+# http://risaiku.net
+# https://github.com/risaiku/grptwi
+#
+
 require 'mail'
 require 'set'
 require 'twitter'
