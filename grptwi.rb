@@ -48,7 +48,6 @@ def get_body(m)
     end
 
     return nil
-
 end
 
 def send_email(addr, body)
@@ -59,6 +58,14 @@ def send_email(addr, body)
     to_mail.body    = body
     to_mail.charset = 'utf-8'
     to_mail.deliver
+end
+
+def send_notice_email(addr, body)
+    send_addrs = Set.new NOTICE_ADDRS
+    send_addrs.add(addr)
+    send_addrs.each{ |to_address|
+        send_email(to_address, body)
+    }
 end
 
 def get_twitter_client
@@ -85,6 +92,7 @@ def delete_tweet(client, id)
     client.status_destroy(id)
 end
 
+
 mail = Mail.new(STDIN.read)
 
 if OK_ADDRS.include?(mail.from.first) then
@@ -94,28 +102,20 @@ if OK_ADDRS.include?(mail.from.first) then
         if DEL_ID_REGEXP =~ body then
             # delete tweet
             del_id = body.match(DEL_ID_REGEXP)[1].to_i
-
             client = get_twitter_client
             tweet  = get_tweet(client, del_id)
             delete_tweet(client, del_id)
 
             send_text = DELETED_TEXT.sub(TWEET_REPLACE_STR, tweet)
-
-            send_email(mail.from.first, send_text)
+            send_notice_email(mail.from.first, send_text)
         else
             # tweet
             client = get_twitter_client
-            id = send_tweet(client, body)
+            id     = send_tweet(client, body)
 
             # send notice mail
-            send_addrs = Set.new NOTICE_ADDRS
-            send_addrs.add(mail.from.first)
-
             send_text = RETURN_TEXT.sub(DEL_ID_REPLACE_STR, id.to_s).sub(TWEET_REPLACE_STR, body).sub(FROM_REPLACE_STR, mail.from.first)
-
-            send_addrs.each{ |to_address|
-                send_email(to_address, send_text)
-            }
+            send_notice_email(mail.from.first, send_text)
         end
     end
 else
