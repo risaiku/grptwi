@@ -8,12 +8,12 @@ notice_addrs:
 from_addr:
  from@example.jp
 
-api_key:
+twitter_api_key:
  YOUR_API_KEY
-api_secret:
+twitter_api_secret:
  YOUR_API_SECRET
-access_token:
+twitter_access_token:
  YOUR_ACCESS_TOKEN
-access_token_secret:
+twitter_access_token_secret:
  YOUR_ACCESS_TOKEN_SECRET
 

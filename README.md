@@ -42,10 +42,10 @@ grptwi
   | ok\_addrs | 投稿を許可するメールアドレス | 文字列のリスト |
   | notice\_addrs | 通知メール送信先メールアドレス | 文字列のリスト |
   | from\_addr | 投稿用メールアドレス | 文字列 |
-  | api\_key | あなたのTwitterアカウントで取得したAPI KEY | 文字列 |
-  | api\_secret | あなたのTwitterアカウントで取得したAPI SECRET | 文字列 |
-  | access\_token | あなたのTwitterアカウントで取得したACCESS TOKEN | 文字列 |
-  | access\_token\_secret | あなたのTwitterアカウントで取得したACCESS TOKEN SECRET | 文字列 |
+  | twitter\_api\_key | TwitterのAPI KEY | 文字列 |
+  | twitter\_api\_secret | TwitterのAPI SECRET | 文字列 |
+  | twitter\_access\_token | TwitterのACCESS TOKEN | 文字列 |
+  | twitter\_access\_token\_secret | TwitterのACCESS TOKEN SECRET | 文字列 |
 
 ## ライセンス等
 MIT License  
