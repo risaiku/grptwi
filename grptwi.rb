@@ -3,7 +3,7 @@
 
 #
 # grptwi.rb
-# v1.0.0
+# v1.1
 #
 # Copyright (c) 2014 risaiku
 # This software is released under the MIT License.
@@ -35,13 +35,13 @@ Twitterへ次の文章を投稿しました。
 
 #{TWEET_REPLACE_STR}
 
-つぶやきを削除する場合は、このメールを「引用返信」してください。内容はそのままで構いません。
+ツイートを削除する場合は、このメールを「引用返信」してください。内容はそのままで構いません。
 
 *** delete target {#{DEL_ID_REPLACE_STR}}. ***
 EOS
 DEL_ID_REGEXP  = /delete target {(.+?)}./
 DELETED_TEXT   = <<EOS
-次のつぶやきを削除しました。
+次のツイートを削除しました。
 
 #{TWEET_REPLACE_STR}
 
@@ -55,7 +55,7 @@ def get_body(m)
             return m.html_part.decoded
         end
     else
-        return m.body.decoded.encode("UTF-8", m.charset)
+        return m.body.decoded.encode('UTF-8', m.charset)
     end
 
     return nil
@@ -110,26 +110,24 @@ if OK_ADDRS.include?(mail.from.first) then
     body = get_body(mail)
 
     if body then
+        client    = get_twitter_client
+        send_text = ''
+
         if DEL_ID_REGEXP =~ body then
             # delete tweet
             del_id = body.match(DEL_ID_REGEXP)[1].to_i
-            client = get_twitter_client
             tweet  = get_tweet(client, del_id)
             delete_tweet(client, del_id)
 
             send_text = DELETED_TEXT.sub(TWEET_REPLACE_STR, tweet)
-            send_notice_email(mail.from.first, send_text)
         else
             # tweet
-            client = get_twitter_client
-            id     = send_tweet(client, body)
+            id = send_tweet(client, body)
 
-            # send notice mail
             send_text = RETURN_TEXT.sub(DEL_ID_REPLACE_STR, id.to_s).sub(TWEET_REPLACE_STR, body).sub(FROM_REPLACE_STR, mail.from.first)
-            send_notice_email(mail.from.first, send_text)
         end
-    end
-else
 
+        send_notice_email(mail.from.first, send_text)
+    end
 end
 
