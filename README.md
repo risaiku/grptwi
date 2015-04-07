@@ -49,7 +49,7 @@ grptwi
 
 ## ライセンス等
 MIT License  
-Copyright 2014, risaiku  
+Copyright 2014-2015, risaiku  
 http://risaiku.net  
 https://github.com/risaiku/grptwi
 

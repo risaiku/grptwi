@@ -3,9 +3,9 @@
 
 #
 # grptwi.rb
-# v1.1
+# v1.2
 #
-# Copyright (c) 2014 risaiku
+# Copyright (c) 2014-2015 risaiku
 # This software is released under the MIT License.
 #
 # http://risaiku.net
@@ -68,6 +68,7 @@ def send_email(addr, body)
     to_mail.subject = RETURN_SUBJECT
     to_mail.body    = body
     to_mail.charset = 'utf-8'
+    to_mail.delivery_method :sendmail
     to_mail.deliver
 end
 
